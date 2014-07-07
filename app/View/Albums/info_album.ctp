@@ -88,7 +88,7 @@
 	            <table class="table table-striped">
 		            <tr>
 			            <td width="100"><?php echo $languageMantan['image'];?> </td>
-			            <td><?php showUploadFile($webRoot,'image','image',$news['Album']['image'],$languageMantan);?></td>
+			            <td><?php showUploadFile('image','image',$news['Album']['image'],$languageMantan);?></td>
 		            </tr>
 		            <tr>
 			            <td><?php echo $languageMantan['information'];?></td>

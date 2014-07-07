@@ -49,10 +49,13 @@
 				$name= $_POST['name'];
 				$parent= (int) $_POST['parent'];
 				$slug= $_POST['slug'];
+				$key= $_POST['key'];
+				$description= $_POST['description'];
+				
 				$return= -1;
 				if($name != '')
 				{
-					$return= $this->Option->saveCategoryNotice($slug,$idCatEdit,$name,$parent);
+					$return= $this->Option->saveCategoryNotice($slug,$idCatEdit,$name,$parent,$key,$description);
 				}
 				$this->redirect($urlLocal['urlOptions']."categoryNotice");
 	
@@ -399,8 +402,9 @@
             $fax= $_POST['fax'];
             $domain= $_POST['domain'];
             $key= $_POST['key'];
+            $description= $_POST['description'];
 			
-            $return= $this->Option->saveInfoSite($title,$address,$fone,$email,$fax,$domain,$key);
+            $return= $this->Option->saveInfoSite($title,$address,$fone,$email,$fax,$domain,$key,$description);
             
             $this->redirect($urlLocal['urlOptions'].'infoSite/?return='.$return);
           }

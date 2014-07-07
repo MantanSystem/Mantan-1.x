@@ -23,6 +23,7 @@
 	$languageMantan['date']= 'Date';
 	$languageMantan['datePosted']= 'Date posted';
 	$languageMantan['delete']= 'Delete';
+	$languageMantan['description']= 'Description';
 	$languageMantan['domainName']= 'Domain name';
 	$languageMantan['edit']= 'Edit';
 	$languageMantan['email']= 'Email';

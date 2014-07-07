@@ -123,7 +123,7 @@
            }
 	   }
 	   
-	   function saveCategoryNotice($slug,$idCatEdit,$name,$parent)
+	   function saveCategoryNotice($slug,$idCatEdit,$name,$parent,$key,$description)
 	   {
 	   		
 	   		$dk = array ('key' => 'categoryNotice');
@@ -147,7 +147,9 @@
 				$save= array(
 								'name'=>$name,
 								'id'=>$groups['Option']['value']['tCategory'],
-								'slug'=>$slug							
+								'slug'=>$slug,
+								'key'=>$key,
+								'description'=>$description							
 							); 	 
 				if($parent==0)
 				{
@@ -491,7 +493,7 @@
 	   }	
 // Quan ly thong tin chung
 
-       function saveInfoSite($title,$address,$fone,$email,$fax,$domain,$key)
+       function saveInfoSite($title,$address,$fone,$email,$fax,$domain,$key,$description)
        {
 
          $dk = array ('key' => 'infoSite');
@@ -504,6 +506,7 @@
          $groupsInfoSite['Option']['value']['title']= $title;
      	 $groupsInfoSite['Option']['value']['domain']= $domain;
      	 $groupsInfoSite['Option']['value']['key']= $key;
+     	 $groupsInfoSite['Option']['value']['description']= $description;
          
          $dk = array ('key' => 'contact');
          $groupsContact= $this -> find('first', array('conditions' => $dk) );

@@ -229,7 +229,7 @@
 		            <td>
 						<p><b><?php echo $languageMantan['ilustration'];?></b></p>
 						<p>
-							<?php showUploadFile($webRoot,'image','image',$news['Notice']['image'],$languageMantan);?>
+							<?php showUploadFile('image','image',$news['Notice']['image'],$languageMantan);?>
 						</p>
 					</td>
 		
@@ -242,7 +242,7 @@
 						<p><b><?php echo $languageMantan['content'];?></b></p>
 						<p>
 							<?php
-								showEditorInput($webRoot,'contentPost','content',$news['Notice']['content']);
+								showEditorInput('contentPost','content',$news['Notice']['content']);
 							?>
 						</p>
 					</td>

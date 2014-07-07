@@ -298,9 +298,10 @@
             $this->redirect($urlLocal['urlAdmins'].'login');
          }
        }
-// Hien thi tin tuc
+// Page - Post
 	function index($slug)
 	{
+		global $infoNotice;
 		//Configure::write('debug', 2);
 		Controller::loadModel('Notice');
 		
@@ -318,11 +319,24 @@
 			$this->set('otherNotices', $otherNotices);
 			$this->loadModel();
 			
+			global $isPost;
+			global $isPage;
+			
+			
+			if($infoNotice['Notice']['type']=='post')
+			{
+				$isPost= true;
+			}
+			else
+			{
+				$isPage= true;
+			}
+			
 			global $metaTitleMantan;
 			global $metaKeywordsMantan;
 			global $metaDescriptionMantan;
 			
-			$metaTitleMantan= $infoNotice['Notice']['title'].' | '.$metaTitleMantan;
+			$metaTitleMantan= $infoNotice['Notice']['title'];
 			$metaKeywordsMantan= $infoNotice['Notice']['key'];
 			$metaDescriptionMantan= $infoNotice['Notice']['introductory'];
 		}
@@ -331,11 +345,14 @@
 			$this->redirect($urlLocal['urlHomes']);
 		}
 	}     
-	
+// Page Category	
 	function cat($slug)
 	{
 		//Configure::write('debug', 2);
-		$id= (int) $id;
+		global $categoryNotice;
+		global $isCategory;
+		$isCategory= true;
+		
 		$this->setup();
 		$this->layout='default';
 		
@@ -369,11 +386,15 @@
 	        $this->set('listNotices', $return);
 	        $this->set('category', $category);
 	        
+	        $categoryNotice= $category;
+	        
 	        global $metaTitleMantan;
 			global $metaKeywordsMantan;
 			global $metaDescriptionMantan;
 			
-			$metaTitleMantan= $category['name'].' | '.$metaTitleMantan;
+			$metaTitleMantan= $category['name'];
+			$metaKeywordsMantan= $category['key'];
+			$metaDescriptionMantan= $category['description'];
         }
         else
 		{
@@ -381,7 +402,36 @@
 		}
         
 	}
+// Page Search	
+	function search()
+	{
+		//Configure::write('debug', 2);
+		global $isSearch;
+		$isSearch= true;
+		
+		$this->setup();
+		$this->layout='default';
+		
+		$this->loadModel();
+		Controller::loadModel('Notice');
+		Controller::loadModel('Option');
+		
+		$conditions['content']= array('$regex' => $_GET['key']);
+		
+        $this->paginate = array(
 
+                                'limit' => 15,
+
+                                'conditions' => $conditions,
+
+                                'order' => array('created' => 'desc'),
+
+                                );
+
+        $return = $this->paginate("Notice");
+        
+        $this->set('listNotices', $return);
+	}
    
    }
 ?>

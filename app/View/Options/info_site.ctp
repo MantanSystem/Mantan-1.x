@@ -100,6 +100,10 @@
 	            <td align="right" ><?php echo $languageMantan['keyWord'];?></td>
 	            <td align="left"><input class="form-control" type="text" value="<?php echo $infoSite['Option']['value']['key'];?>" name="key" id="key" /></td>
 	          </tr>
+	          <tr>
+	            <td align="right" ><?php echo $languageMantan['description'];?></td>
+	            <td align="left"><input class="form-control" type="text" value="<?php echo $infoSite['Option']['value']['description'];?>" name="description" id="description" /></td>
+	          </tr>
 	      </table>
 	    </form>
 	  </div>

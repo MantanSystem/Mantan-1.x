@@ -94,6 +94,7 @@
  	Router::connect($urlBase.'notices/addPage/*', array('controller' => 'notices', 'action' => 'addPage'));
  	Router::connect($urlBase.'notices/savePages/*', array('controller' => 'notices', 'action' => 'savePages'));
  	Router::connect($urlBase.'notices/cat/*', array('controller' => 'notices', 'action' => 'cat'));
+ 	Router::connect($urlBase.'notices/search/*', array('controller' => 'notices', 'action' => 'search'));
  	
  	Router::connect($urlBase.'notices/*', array('controller' => 'notices', 'action' => 'index'));
  	

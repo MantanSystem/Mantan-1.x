@@ -9,7 +9,7 @@
 	            <tr>
 	                <td><?php echo $languageMantan['ilustration'];?> (*)</td>
 	                <td>
-	                	<?php showUploadFile($webRoot,'imageEdit','image',$news['Album']['img'][0]['src'],$languageMantan,'Edit');?>
+	                	<?php showUploadFile('imageEdit','image',$news['Album']['img'][0]['src'],$languageMantan,'Edit');?>
 	                </td>
 	            </tr>
 	            <tr>

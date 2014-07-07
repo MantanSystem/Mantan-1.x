@@ -31,14 +31,31 @@ $metaTitleMantan= '';
 $metaKeywordsMantan= '';	
 $metaDescriptionMantan= '';	
 
-// Homes			
+$isHome= false;
+$isCategory= false;
+$isPost= false;
+$isPage= false;
+$isSearch= false;
+$isPlugin= false;
+
+$hookFunctionMantan= array();
+$categoryNotice= array();
+$infoNotice= array();
+
+// System	
+function replaceFunction($oldFunction,$newFunction)
+{
+	global $hookFunctionMantan;
+	$hookFunctionMantan[$oldFunction]= $newFunction;
+}
+		
 function mantan_header()
 {
 	global $checkMantanHeader;
 	$checkMantanHeader= true;
-	echo '  <meta name="generator" content="Mantan 1.1" />
-			<meta name="application-name" content="Mantan 1.1">
-			<META NAME="Publisher" CONTENT="Mantan 1.1">
+	echo '  <meta name="generator" content="Mantan 1.2" />
+			<meta name="application-name" content="Mantan 1.2">
+			<meta name="Publisher" CONTENT="Mantan 1.2">
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<meta name="robots" content="noodp,index,follow" />
 			<meta name="revisit-after" content="1 days" />
@@ -156,94 +173,129 @@ function getUrlNotice($id)
 function addMenuAdminMantan($menus= array())
 {
 	global $urlNow;
-	foreach($menus as $menu)
+	global $hookFunctionMantan;
+	
+	if($hookFunctionMantan['addMenuAdminMantan'])
 	{
-		if(!$menu['sub'])
+		$hookFunctionMantan['addMenuAdminMantan']($menus);
+	}
+	else
+	{
+		foreach($menus as $menu)
 		{
-			if($urlNow!=$menu['url'])
+			if(!$menu['sub'])
 			{
-				$class= '';
-			}
-			else
-			{
-				$class= 'active';
-			}
-			
-			echo '  <li class="'.$class.'">
-                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'</a>
-                    </li>';
-		}
-		else
-		{
-			$class='';
-			if($menu['url']==$urlNow)
-			{
-				$class= 'active';
-			}
-			else
-			{
-				foreach($menu['sub'] as $subMenu)
+				if($urlNow!=$menu['url'])
 				{
-					if($urlNow==$subMenu['url'])
+					$class= '';
+				}
+				else
+				{
+					$class= 'active';
+				}
+				
+				echo '  <li class="'.$class.'">
+	                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'</a>
+	                    </li>';
+			}
+			else
+			{
+				$class='';
+				if($menu['url']==$urlNow)
+				{
+					$class= 'active';
+				}
+				else
+				{
+					foreach($menu['sub'] as $subMenu)
 					{
-						$class= 'active';
-						break;
+						if($urlNow==$subMenu['url'])
+						{
+							$class= 'active';
+							break;
+						}
 					}
 				}
+				
+				echo ' <li class="'.$class.'">
+	                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'<span class="fa arrow"></span></a>
+	                        <ul class="nav nav-second-level">';
+	                        foreach($menu['sub'] as $sub)
+	                        {
+	                        	if($urlNow==$sub['url'])
+								{
+									$classSub= 'activeSub';
+								}
+								else
+								{
+									$classSub= '';
+								}
+								
+	                        	echo '  <li class="'.$classSub.'">
+			                                <a href="'.$sub['url'].'">'.$sub['name'].'</a>
+			                            </li>';
+	                        }
+	            echo        '</ul>
+	                    </li>';
 			}
-			
-			echo ' <li class="'.$class.'">
-                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">';
-                        foreach($menu['sub'] as $sub)
-                        {
-                        	if($urlNow==$sub['url'])
-							{
-								$classSub= 'activeSub';
-							}
-							else
-							{
-								$classSub= '';
-							}
-							
-                        	echo '  <li class="'.$classSub.'">
-		                                <a href="'.$sub['url'].'">'.$sub['name'].'</a>
-		                            </li>';
-                        }
-            echo        '</ul>
-                    </li>';
 		}
 	}
-}
-
-						
-                        
+}                        
 
 function addBreadcrumbAdmin($menu= array())
 {
-	echo '  <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                    	<a href="'.$menu['url'].'">'.$menu['name'].'</a> :: <a href="'.$menu['sub']['url'].'">'.$menu['sub']['name'].'</a>
-                    </h1>
-                </div>
-            </div>';
-}
-
-function showEditorInput($webRoot,$idEditor,$nameEditor,$content,$loadJs=1)
-{
-	if($loadJs)
+	global $hookFunctionMantan;
+	
+	if($hookFunctionMantan['addBreadcrumbAdmin'])
 	{
-		echo '<script language="javascript" src="'.$webRoot.'ckeditor/ckeditor.js" type="text/javascript"></script>';
+		$hookFunctionMantan['addBreadcrumbAdmin']($menu);
 	}
-	echo '  <textarea style="border: 1px solid #abadb3;height: auto;"  name="'.$nameEditor.'" id="'.$idEditor.'">'.$content.'</textarea>
-			<script type="text/javascript">
-				CKEDITOR.replace( "'.$idEditor.'"); 
-			</script>';
+	else
+	{
+		echo '  <div class="row">
+	                <div class="col-lg-12">
+	                    <h1 class="page-header">
+	                    	<a href="'.$menu['url'].'">'.$menu['name'].'</a> :: <a href="'.$menu['sub']['url'].'">'.$menu['sub']['name'].'</a>
+	                    </h1>
+	                </div>
+	            </div>';
+	}
 }
 
-function showUploadFile($webRoot,$idInput,$nameInput,$value,$languageMantan,$number='')
-{ ?>
+function showEditorInput($idEditor,$nameEditor,$content,$loadJs=1)
+{
+	global $webRoot;
+	global $hookFunctionMantan;
+	
+	if($hookFunctionMantan['showEditorInput'])
+	{
+		$hookFunctionMantan['showEditorInput']($idEditor,$nameEditor,$content,$loadJs);
+	}
+	else
+	{
+		if($loadJs)
+		{
+			echo '<script language="javascript" src="'.$webRoot.'ckeditor/ckeditor.js" type="text/javascript"></script>';
+		}
+		echo '  <textarea style="border: 1px solid #abadb3;height: auto;"  name="'.$nameEditor.'" id="'.$idEditor.'">'.$content.'</textarea>
+				<script type="text/javascript">
+					CKEDITOR.replace( "'.$idEditor.'"); 
+				</script>';
+	}
+}
+
+function showUploadFile($idInput,$nameInput,$value,$languageMantan,$number='')
+{ 
+	global $webRoot;
+	global $hookFunctionMantan;
+	
+	if($hookFunctionMantan['showUploadFile'])
+	{
+		$hookFunctionMantan['showUploadFile']($idInput,$nameInput,$value,$languageMantan,$number);
+	}
+	else
+	{
+?>
 	<script type="text/javascript" src="<?php echo $webRoot;?>ckfinder/ckfinder.js"></script>
 	<script type="text/javascript">
 			function BrowseServerImage<?php echo $number;?>()
@@ -267,6 +319,7 @@ function showUploadFile($webRoot,$idInput,$nameInput,$value,$languageMantan,$num
 	</script>
 	<input type="text" name="<?php echo $nameInput;?>" id='<?php echo $idInput;?>' value="<?php echo $value;?>" />
 	<input type="button" value="<?php echo $languageMantan['choose'];?>" onclick="BrowseServerImage<?php echo $number;?>();" />
-<?php }
-
+<?php 
+	}
+}
 ?>

@@ -59,7 +59,7 @@
 			}
 	?>
 	
-	<form action="<?php echo $urlNotices;?>" method="get" class="taovienLimit" style="width: 680px;margin-left: 10px;">
+	<form action="" method="get" class="taovienLimit" style="width: 680px;margin-left: 10px;">
 		<?php echo $languageMantan['categories'];?>
 		<select name="category" id="category" class="form-control" style="width: auto;display: inline;margin-bottom: 15px;">
 		<option value="-1"><?php echo $languageMantan['all'];?></option>
@@ -85,7 +85,7 @@
 
             <td align="center" width="75"><?php echo $languageMantan['event'];?></td>
 
-            <td align="center" width="165"><?php echo $languageMantan['choose'];?></td>
+            <td align="center" width="225"><?php echo $languageMantan['choose'];?></td>
 
         </tr>
         <?php

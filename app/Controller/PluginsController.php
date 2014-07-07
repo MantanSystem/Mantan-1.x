@@ -48,6 +48,9 @@
 			$this->loadModel();
 			
 			global $routesPlugin;
+			global $isPlugin;
+			
+			$isPlugin= true;
 			
 			if($routesPlugin[$url])
 			{

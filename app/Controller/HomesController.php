@@ -12,6 +12,9 @@
 		function index()
 		{
 			//Configure::write('debug', 2);
+			global $isHome;
+			
+			$isHome= true;
 			$this->setup();
 			$this->layout='default';
 			$this->loadModel();

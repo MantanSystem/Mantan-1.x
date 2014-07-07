@@ -76,10 +76,12 @@
 				<div class="form-group">
 					<input type="hidden" value="" name="idCatEdit" id="idCatEdit" />
 					
-					<table cellspacing="0" class="table" style="width: 50%;" >									
+					<table cellspacing="0" class="table" style="width: 100%;" >									
 						<tr>
 							<td width="150"><?php echo $languageMantan['nameCategories'];?></td>
 							<td><input class="form-control" type="text" name="name" id="name" value="" onkeyup="createSlug();" onchange="createSlug();" /></td>
+							<td width="150" align="right"><?php echo $languageMantan['keyWord'];?></td>
+							<td><input class="form-control" type="text" name="key" id="key" value="" /></td>
 						</tr>
 	                    <tr>
 							<td><?php echo $languageMantan['parentCategories'];?></td>
@@ -95,6 +97,10 @@
 								?>
 								</select>
 							</td>
+							<td rowspan="2" align="right"><?php echo $languageMantan['description'];?></td>
+							<td rowspan="2">
+								<textarea id="description" class="form-control" name="description" rows="5"></textarea>
+							</td>
 						</tr>
 						<tr>
 							<td width="100"><?php echo $languageMantan['permalinks'];?></td>
@@ -104,7 +110,7 @@
 						</tr>
 	                    
 	                   <tr>
-	                        <td colspan="2">
+	                        <td colspan="4">
 	                            <input type="submit" value="<?php echo $languageMantan['saveCategories'];?>" class="btn btn-default"  />   
 	                            &nbsp;&nbsp;   
 	                            <input type="reset" value="<?php echo $languageMantan['addNew'];?>" class="btn btn-default"  />                                         

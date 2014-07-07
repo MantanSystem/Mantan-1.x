@@ -23,6 +23,7 @@
 	$languageMantan['date']= 'Ngày';
 	$languageMantan['datePosted']= 'Ngày đăng';
 	$languageMantan['delete']= 'Xóa';
+	$languageMantan['description']= 'Mô tả';
 	$languageMantan['domainName']= 'Tên miền';
 	$languageMantan['edit']= 'Sửa';
 	$languageMantan['email']= 'Email';

@@ -226,7 +226,7 @@
 	            <tr>
 	                <td><?php echo $languageMantan['ilustration'];?> (*)</td>
 	                <td>
-	                	<?php showUploadFile($webRoot,'image','image',$news['Album']['image'],$languageMantan);?>
+	                	<?php showUploadFile('image','image',$news['Album']['image'],$languageMantan);?>
 	                </td>
 	            </tr>
 	            <tr>

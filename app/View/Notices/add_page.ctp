@@ -105,7 +105,7 @@
 	            <td height="85">
 					<p><?php echo $languageMantan['ilustration'];?></p>
 					<p>
-						<?php showUploadFile($webRoot,'image','image',$news['Notice']['image'],$languageMantan);?>
+						<?php showUploadFile('image','image',$news['Notice']['image'],$languageMantan);?>
 					</p>
 				</td>
 	
@@ -117,7 +117,7 @@
 					<p><?php echo $languageMantan['content'];?></p>
 					<p>
 						<?php
-							showEditorInput($webRoot,'contentPage','content',$news['Notice']['content']);
+							showEditorInput('contentPage','content',$news['Notice']['content']);
 						?>
 					</p>
 				</td>

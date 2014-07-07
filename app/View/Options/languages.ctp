@@ -1,4 +1,3 @@
-
 <?php
 	$languageMantanActive= $languageMantan;
 	$breadcrumb= array( 'name'=>$languageMantanActive['languages'],

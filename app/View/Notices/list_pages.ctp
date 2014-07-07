@@ -65,7 +65,7 @@
 	            <td><b><?php echo $languageMantan['title'];?></b></td>
 	
 	            <td><b><?php echo $languageMantan['permalinks'];?></b></td>
-	            <td align="center" width="160"><b><?php echo $languageMantan['choose'];?></b></td>
+	            <td align="center" width="225"><b><?php echo $languageMantan['choose'];?></b></td>
 	
 	        </tr>
 	

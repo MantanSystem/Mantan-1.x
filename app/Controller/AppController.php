@@ -121,6 +121,7 @@ class AppController extends Controller {
 	              
 	              $metaTitleMantan= $infoSite['Option']['value']['title'];
 	              $metaKeywordsMantan= $infoSite['Option']['value']['key'];
+	              $metaDescriptionMantan= $infoSite['Option']['value']['description'];
 	              
 	              $this->layout= 'admin';
 	              
