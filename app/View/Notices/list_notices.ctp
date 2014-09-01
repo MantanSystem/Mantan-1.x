@@ -95,7 +95,7 @@
             {
                     echo '<tr>
 
-                              <td>'.$tin['Notice']['title'].'</td>
+                              <td><a href="'.getUrlNotice($tin['Notice']['id']).'">'.$tin['Notice']['title'].'</a></td>
 
                               <td>';
                     $listCatNoti= array();

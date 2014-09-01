@@ -171,23 +171,67 @@
         }
 
 // Quan ly tai khoan ca nhan -------------------------------------------------
+	   function listAccount()
+	   {
+		   //Configure::write('debug', 2);
 
-       function account()
+	         $users= $this->Session->read('infoAdminLogin');
+	         if($users)
+	         {
+		         	$this->setup();
+		            $this->set('menu', 3);
+		             
+		            Controller::loadModel('Admin');
+		            
+	
+	                $this->paginate = array(
+	
+	                                        'limit' => 15,
+	
+	                                        'conditions' => $dk,
+	
+	                                        'order' => array('created'=> 'DESC')
+	
+	                                        );
+	
+	                
+	                $return = $this->paginate("Admin");
+	                
+	                $this->set('listData', $return);
+	         }
+	         else 
+	         {
+	        	$urlLocal= $this->getUrlLocal();
+	            $this->redirect($urlLocal['urlAdmins'].'login');
+	         }
+	   }
+	   
+       function account($idAdmin=null)
        {
        	 //Configure::write('debug', 2);
          $users= $this->Session->read('infoAdminLogin');
+         $urlLocal= $this->getUrlLocal();
          if($users)
          {
 	         $this->setup();
+	         Controller::loadModel('Admin');
+	         if($idAdmin)
+	         {
+	         	$account= $this->Admin->getAdmin($idAdmin);
+	         	if($account)
+			 	{
+	         		$this->set('account', $account);
+			 	}
+			 	else $this->redirect($urlLocal['urlAdmins']);
+			 }
          }
          else 
          {
-        	$urlLocal= $this->getUrlLocal();
             $this->redirect($urlLocal['urlAdmins'].'login');
          }
        }
 
-       function changePass()
+       function saveAccount()
        {
        	 //Configure::write('debug', 2);
          $users= $this->Session->read('infoAdminLogin');
@@ -195,29 +239,32 @@
     	 
          if($users)
          {
-            if($_POST['id'] != '')
+            $passOld= $_POST['passOld'];
+
+            $pass1= $_POST['pass1'];
+
+            $pass2= $_POST['pass2'];
+
+            if($pass1==$pass2)
             {
-                $id= new MongoId($_POST['id']);
-
-                $passOld= $_POST['passOld'];
-
-                $pass1= $_POST['pass1'];
-
-                $pass2= $_POST['pass2'];
-
-                if($pass1==$pass2)
-                {
-                    $passOld= md5($passOld);
-                    $pass1= md5($pass1);
-                    Controller::loadModel('Admin');
-                    $return= $this->Admin->changePass($passOld,$pass1,$id);
-                }
-                else $return= -2;
-
-                $this->redirect($urlLocal['urlAdmins'].'account?return='.$return);
+                $pass1= md5($pass1);
+                Controller::loadModel('Admin');
+                $account['passOld']= $passOld;
+                $account['pass1']= $pass1;
+                $account['email']= $_POST['email'];
+                $account['information']= $_POST['information'];
+                $account['id']= $_POST['id'];
+                $account['user']= $_POST['user'];
+                
+                $return= $this->Admin->saveAccount($account);
             }
-            else $this->redirect($urlLocal['urlAdmins'].'account?return=-1');
-
+            else $return= -2;
+			
+			if($_POST['id']=='')
+			{
+				$this->redirect($urlLocal['urlAdmins'].'listAccount');
+			}
+            else $this->redirect($urlLocal['urlAdmins'].'account/'.$_POST['id'].'?return='.$return);
          }
          else 
          {

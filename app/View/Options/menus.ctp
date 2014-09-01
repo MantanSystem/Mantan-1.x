@@ -132,7 +132,7 @@
 	  </center>
 	  <div style="width: 38%;float:left;">
 	    <form action="" method="post" name="listForm">
-	        <table id="listTable" cellspacing="0" class="table table-striped" style="width: 450px;">
+	        <table id="listTable" cellspacing="0" class="table table-striped" style="width: 100%;">
 	
 	                <tr>
 	                  <td align="center" colspan="2"><b><?php echo $languageMantan['menuSystem'];?></b></td>
@@ -184,7 +184,7 @@
 	  </div>
 	  <div class="taovien" style="float:right;width:60%;">
 	  	<form action="" method="post" name="listForm">
-		   <table id="listTable" cellspacing="0" class="table table-striped" style="width: 550px;">
+		   <table id="listTable" cellspacing="0" class="table table-striped" style="width: 100%;">
 	            <tr>
 	              <td align="center" colspan="3">
 	              	<?php 

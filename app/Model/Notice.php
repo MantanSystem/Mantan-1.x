@@ -112,7 +112,7 @@
          return $notice;
        }
        
-       function getOtherNotice($category=array(),$limit=5)
+       function getOtherNotice($category=array(),$limit=5,$conditions=array())
        {
        		 if(!$category) 
        		 {
@@ -122,7 +122,7 @@
        		 {
 	         	$conditions['category']= array('$in'=>$category);
 	         }
-	         $notice = $this -> find('all', array('conditions' => $conditions,'limit' =>$limit) );
+	         $notice = $this -> find('all', array('conditions' => $conditions,'limit' =>$limit,'order' => array('created'=> 'DESC')) );
 	         return $notice;
        }
        

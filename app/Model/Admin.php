@@ -30,32 +30,41 @@
 
        }
        
-       function changePass($passOld,$pass1,$id)
+       function saveAccount($account)
        {
-
+		 $id= new MongoId($account['id']);
          $dk= array('_id'=>$id);
-         $lay= array('password'=>1);
 
-         $admins= $this -> find('first', array('conditions' => $dk,'fields' => $lay) );
+         $admins= $this -> find('first', array('conditions' => $dk) );
          if($admins)
          {
-
-           if($admins['Admin']['password']== $passOld)
-
+           if($admins['Admin']['password']== md5($account['passOld']))
            {
-
-             $admins['Admin']['password']= $pass1;
-
-             $this->save($admins,  false,  array('password') );
-
-             return 1;
-
+             $admins['Admin']['password']= $account['pass1'];
            }
-
-           else return -3;
-
+           else if($account['passOld']!='') return -3;
+		   
+		   $admins['Admin']['email']= $account['email'];
+		   $admins['Admin']['information']= $account['information'];
+		   $this->updateAll($admins['Admin'],$dk);
+		   return 1;
          }
-         return -1;
+         else if($account['id']=='' && $account['user']!='')
+         {
+         	 $dk= array('user'=>$account['user']);
+         	 $admins= $this -> find('first', array('conditions' => $dk) );
+         	 if(!$admins)
+         	 {
+		         $admins['Admin']['email']= $account['email'];
+				 $admins['Admin']['information']= $account['information'];
+				 $admins['Admin']['password']= $account['pass1'];
+				 $admins['Admin']['user']= $account['user'];
+				 $this->save($admins);
+				 return 1;
+			 }
+			 else return -1;
+         }
+         else return -1;
 
        }
        

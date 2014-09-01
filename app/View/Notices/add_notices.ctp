@@ -4,12 +4,7 @@
 						'sub'=>array('name'=>$languageMantan['addNew'])
 					  );
 	addBreadcrumbAdmin($breadcrumb);
-?> 
-<style>
-	#page-wrapper{
-		float: left;
-	}
-</style>  
+?>   
     <script type="text/javascript">
 
 	    var urlWeb="<?php echo $urlNotices;?>";
@@ -126,7 +121,7 @@
 	    <input type="hidden" value="<?php echo $news['Notice']['slug'];?>" name="slug" id="slug" />
 	    
 	    <div style="width: 60%;float:left;">
-		    <table cellspacing="0" style="width: 700px;" class="table" >
+		    <table cellspacing="0" style="width: 100%;" class="table" >
 		        <tr>
 		            <td width="320">
 						<p><b><?php echo $languageMantan['title'];?> (*)</b></p>

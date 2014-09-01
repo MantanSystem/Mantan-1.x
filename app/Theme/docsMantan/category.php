@@ -21,11 +21,6 @@
             
             <p>
 			    <?php
-					$urlParams = $this->params['url'];
-					unset($urlParams['url']);
-					$this->Paginator->options(array('url' => array('?' => http_build_query($urlParams))));
-				    echo "&nbsp;";
-				
 				    echo $this->Paginator->prev('« '.$languageMantan['previousPage'].' ', null, null, array('class' => 'disabled')); //Shows the next and previous links
 				
 				    echo " | ".$this->Paginator->numbers()." | "; //Shows the page numbers

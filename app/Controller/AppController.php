@@ -105,7 +105,10 @@ class AppController extends Controller {
 				  global $metaKeywordsMantan;
 				  global $metaDescriptionMantan;
 				  
-	              $users= $this->Session->read('infoAdminLogin');
+				  global $routesPlugin;
+				  global $userAdmins;
+				  
+	              $userAdmins= $this->Session->read('infoAdminLogin');
 	              $userHome= $this->Session->read('infoUserLogin');
 	              
 	              Controller::loadModel('Option');
@@ -126,7 +129,7 @@ class AppController extends Controller {
 	              $this->layout= 'admin';
 	              
 	
-	              $this->set('userAdmins', $users);
+	              $this->set('userAdmins', $userAdmins);
 	              $this->set('userHomes', $userHome);
 	              
 	              $plugins= $this->Option->getOption('plugins');
@@ -171,14 +174,37 @@ class AppController extends Controller {
 	              $this->set('urlLocalThemeActive', $urlLocalThemeActive );
 	              $this->set('webRoot', $webRoot );
 	              
-	              /*
-	              if(strpos($urlNow,'Index.php')!== false)
-			 	  {
-				 	  $urlNow= str_replace('Index.php', 'index.php', $urlNow);
-				 	  
-				 	  $this->redirect($urlNow);
-			 	  }
-			 	  */
+	              
+				  $listPlugin= $this->Option->getOption('plugins');
+	              foreach($listPlugin['Option']['value'] as $plugin)
+				  {
+				    	$filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/function.php';
+				        if (file_exists($filename))
+				        {
+				            include($filename);
+				        }
+				        
+				        $filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/model.php';
+				        if (file_exists($filename))
+				        {
+				            include($filename);
+				        }
+				        
+				        $filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/routes.php';
+				        if (file_exists($filename))
+				        {
+				            include($filename);
+				        }
+				  }
+				   
+				  $filename = $urlLocal['urlLocalTheme'].'/'.$themeActive['Option']['value'].'/function.php';
+			      if (file_exists($filename))
+			      {
+			          include($filename);
+			      }
+			      
+			      
+			      $routesPlugin= $routesPlugin;
               }
               else
               {
@@ -248,7 +274,6 @@ class AppController extends Controller {
 			global $modelAdmin;
 			global $modelUser;
 			global $modelVideo;
-			global $routesPlugin;
 			
 			$modelOption= new Option();
 			$modelNotice= new Notice();
@@ -258,37 +283,7 @@ class AppController extends Controller {
 			$modelVideo= new Video();
 			
 			$themeActive= $this->Option->getOption('theme');
-			$listPlugin= $modelOption->getOption('plugins');
 			$urlLocal= $this->getUrlLocal();
-			
-		    foreach($listPlugin['Option']['value'] as $plugin)
-		    {
-		    	$filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/function.php';
-		        if (file_exists($filename))
-		        {
-		            include($filename);
-		        }
-		        
-		        $filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/model.php';
-		        if (file_exists($filename))
-		        {
-		            include($filename);
-		        }
-		        
-		        $filename = $urlLocal['urlLocalPlugin'].'/'.$plugin.'/routes.php';
-		        if (file_exists($filename))
-		        {
-		            include($filename);
-		        }
-		    }
-		    
-		    $routesPlugin= $routesPlugin;
-		   
-		    $filename = $urlLocal['urlLocalTheme'].'/'.$themeActive['Option']['value'].'/function.php';
-	        if (file_exists($filename))
-	        {
-	            include($filename);
-	        }
 	        
 	        $this->set('modelOption', $modelOption );
 	        $this->set('modelNotice', $modelNotice );

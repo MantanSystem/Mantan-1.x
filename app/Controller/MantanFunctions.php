@@ -2,6 +2,9 @@
 session_name('CAKEPHP');
 session_start(); 
 $checkMantanHeader= false;
+
+$userAdmins= '';
+
 $modelOption= '';
 $modelNotice= '';
 $modelAlbum= '';
@@ -39,6 +42,10 @@ $isSearch= false;
 $isPlugin= false;
 
 $hookFunctionMantan= array();
+$hookMenuAdminMantan= array();
+
+$tmpVariable= array();
+
 $categoryNotice= array();
 $infoNotice= array();
 
@@ -48,14 +55,20 @@ function replaceFunction($oldFunction,$newFunction)
 	global $hookFunctionMantan;
 	$hookFunctionMantan[$oldFunction]= $newFunction;
 }
+
+function setVariable($key,$value)
+{
+	global $tmpVariable;
+	$tmpVariable[$key]= $value;
+}
 		
 function mantan_header()
 {
 	global $checkMantanHeader;
 	$checkMantanHeader= true;
-	echo '  <meta name="generator" content="Mantan 1.2" />
-			<meta name="application-name" content="Mantan 1.2">
-			<meta name="Publisher" CONTENT="Mantan 1.2">
+	echo '  <meta name="generator" content="Mantan 1.3" />
+			<meta name="application-name" content="Mantan 1.3">
+			<meta name="Publisher" CONTENT="Mantan 1.3">
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<meta name="robots" content="noodp,index,follow" />
 			<meta name="revisit-after" content="1 days" />
@@ -174,6 +187,7 @@ function addMenuAdminMantan($menus= array())
 {
 	global $urlNow;
 	global $hookFunctionMantan;
+	global $hookMenuAdminMantan;
 	
 	if($hookFunctionMantan['addMenuAdminMantan'])
 	{
@@ -181,65 +195,10 @@ function addMenuAdminMantan($menus= array())
 	}
 	else
 	{
-		foreach($menus as $menu)
-		{
-			if(!$menu['sub'])
-			{
-				if($urlNow!=$menu['url'])
-				{
-					$class= '';
-				}
-				else
-				{
-					$class= 'active';
-				}
-				
-				echo '  <li class="'.$class.'">
-	                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'</a>
-	                    </li>';
-			}
-			else
-			{
-				$class='';
-				if($menu['url']==$urlNow)
-				{
-					$class= 'active';
-				}
-				else
-				{
-					foreach($menu['sub'] as $subMenu)
-					{
-						if($urlNow==$subMenu['url'])
-						{
-							$class= 'active';
-							break;
-						}
-					}
-				}
-				
-				echo ' <li class="'.$class.'">
-	                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'<span class="fa arrow"></span></a>
-	                        <ul class="nav nav-second-level">';
-	                        foreach($menu['sub'] as $sub)
-	                        {
-	                        	if($urlNow==$sub['url'])
-								{
-									$classSub= 'activeSub';
-								}
-								else
-								{
-									$classSub= '';
-								}
-								
-	                        	echo '  <li class="'.$classSub.'">
-			                                <a href="'.$sub['url'].'">'.$sub['name'].'</a>
-			                            </li>';
-	                        }
-	            echo        '</ul>
-	                    </li>';
-			}
-		}
+		if(!is_array($hookMenuAdminMantan)) $hookMenuAdminMantan= array();
+		$hookMenuAdminMantan= array_merge($hookMenuAdminMantan, $menus); 
 	}
+	
 }                        
 
 function addBreadcrumbAdmin($menu= array())
@@ -255,8 +214,16 @@ function addBreadcrumbAdmin($menu= array())
 		echo '  <div class="row">
 	                <div class="col-lg-12">
 	                    <h1 class="page-header">
-	                    	<a href="'.$menu['url'].'">'.$menu['name'].'</a> :: <a href="'.$menu['sub']['url'].'">'.$menu['sub']['name'].'</a>
-	                    </h1>
+	                    	<a href="'.$menu['url'].'">'.$menu['name'].'</a>';
+	                    	
+	                    	while($menu['sub']['name']!='')
+	                    	{
+		                    	echo ' :: <a href="'.$menu['sub']['url'].'">'.$menu['sub']['name'].'</a>';
+		                    	$menu= $menu['sub'];
+	                    	}
+	                    	
+	                    	 
+	     echo           '</h1>
 	                </div>
 	            </div>';
 	}

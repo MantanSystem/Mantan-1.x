@@ -347,3 +347,7 @@ table.dataTable thead .sorting:after {
 .activeSub a{
 	color: red;
 }
+#page-wrapper{
+	float: left;
+	width: 80%;
+}

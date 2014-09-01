@@ -17,7 +17,7 @@
          if($users)
          {
 	         	$this->setup();
-	            $this->set('menu', 3);
+	           
 	             
 	            Controller::loadModel('Option');
 	            Controller::loadModel('Notice');

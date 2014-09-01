@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a target="_blank" class="navbar-brand" href="http://mantansource.com">Mantan Admin v1.1</a>
+                <a target="_blank" class="navbar-brand" href="http://mantansource.com">Mantan Admin v1.3</a>
                 <?php
 	                if($infoSite['Option']['value']['title'])
 	                {
@@ -56,7 +56,7 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<?php echo $urlAdmins.'account';?>"><i class="fa fa-user fa-fw"></i> <?php echo $languageMantan['changePassword'];?></a>
+                        <li><a href="<?php echo $urlAdmins.'account/'.$userAdmins['Admin']['id'];?>"><i class="fa fa-user fa-fw"></i> <?php echo $languageMantan['changePassword'];?></a>
                         </li>
                         <li><a href="<?php echo $urlOptions.'infoSite';?>"><i class="fa fa-gear fa-fw"></i> <?php echo $languageMantan['setting'];?></a>
                         </li>
@@ -74,6 +74,10 @@
                 <div class="sidebar-collapse">
                     <ul class="nav" id="side-menu">
                         <?php
+                        	global $hookMenuAdminMantan;
+                        	
+                        	if(!is_array($hookMenuAdminMantan)) $hookMenuAdminMantan= array();
+                        	
 	                    	$menus= array();
 		                    $menus[0]= array('name'=>$languageMantan['setting'],'url'=>$urlOptions.'infoSite');
 		                    $menus[1]= array('name'=>$languageMantan['news'],
@@ -95,21 +99,71 @@
 		                    			   );
 		                    $menus[7]= array('name'=>$languageMantan['expand'],'url'=>$urlOptions.'plugins');
 		                    			   
-		                    addMenuAdminMantan($menus);
-	                    
-		                    foreach($menuPlugins as $menuP)
-		                    {
-		                    	$filename = $urlLocal['urlLocalPlugin'].'/'.$menuP.'/menu.php';
-		                    	//var_dump($filename);
-			                    if (file_exists($filename))
-			                    {
-				                    include($filename);
-			                    }
-		                    }
+		                    $hookMenuAdminMantan= array_merge($menus,$hookMenuAdminMantan);
 		                    
 		                    $menus= array();
-		                    $menus[0]= array('name'=>$languageMantan['logout'].' ['.$userAdmins['Admin']['user'].']','url'=>$urlAdmins.'logout');
-		                    addMenuAdminMantan($menus);
+		                    $menus[0]= array('name'=>$languageMantan['account'],'url'=>$urlAdmins.'listAccount');
+		                    $menus[1]= array('name'=>$languageMantan['logout'].' ['.$userAdmins['Admin']['user'].']','url'=>$urlAdmins.'logout');
+		                    $hookMenuAdminMantan= array_merge($hookMenuAdminMantan,$menus);
+		                    
+		                    foreach($hookMenuAdminMantan as $menu)
+							{
+								if(!$menu['sub'])
+								{
+									if($urlNow!=$menu['url'])
+									{
+										$class= '';
+									}
+									else
+									{
+										$class= 'active';
+									}
+									
+									echo '  <li class="'.$class.'">
+						                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'</a>
+						                    </li>';
+								}
+								else
+								{
+									$class='';
+									if($menu['url']==$urlNow)
+									{
+										$class= 'active';
+									}
+									else
+									{
+										foreach($menu['sub'] as $subMenu)
+										{
+											if($urlNow==$subMenu['url'])
+											{
+												$class= 'active';
+												break;
+											}
+										}
+									}
+									
+									echo ' <li class="'.$class.'">
+						                        <a href="'.$menu['url'].'"><i class="fa fa-files-o fa-fw"></i> '.$menu['name'].'<span class="fa arrow"></span></a>
+						                        <ul class="nav nav-second-level">';
+						                        foreach($menu['sub'] as $sub)
+						                        {
+						                        	if($urlNow==$sub['url'])
+													{
+														$classSub= 'activeSub';
+													}
+													else
+													{
+														$classSub= '';
+													}
+													
+						                        	echo '  <li class="'.$classSub.'">
+								                                <a href="'.$sub['url'].'">'.$sub['name'].'</a>
+								                            </li>';
+						                        }
+						            echo        '</ul>
+						                    </li>';
+								}
+							}
 	                    ?>
                     </ul>
                     <!-- /#side-menu -->

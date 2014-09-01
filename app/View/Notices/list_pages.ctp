@@ -79,7 +79,7 @@
 	
 	                    echo '<tr>
 	
-	                              <td>'.$tin['Notice']['title'].'</td>
+	                              <td><a href="'.getUrlNotice($tin['Notice']['id']).'">'.$tin['Notice']['title'].'</a></td>
 	                              <td>'.$tin['Notice']['slug'].'</td>
 	                              <td align="center">
 	                              	<a  class="btn btn-default" href="'.$urlNotices.'addPage/'.$tin['Notice']['id'].'">'.$languageMantan['edit'].'</a>

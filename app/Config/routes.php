@@ -40,8 +40,9 @@
  	Router::connect($urlBase.'admins/login/*', array('controller' => 'admins', 'action' => 'login'));
  	Router::connect($urlBase.'admins/loginAfter/*', array('controller' => 'admins', 'action' => 'loginAfter'));
  	Router::connect($urlBase.'admins/logout/*', array('controller' => 'admins', 'action' => 'logout'));
+ 	Router::connect($urlBase.'admins/listAccount/*', array('controller' => 'admins', 'action' => 'listAccount'));
  	Router::connect($urlBase.'admins/account/*', array('controller' => 'admins', 'action' => 'account'));
- 	Router::connect($urlBase.'admins/changePass/*', array('controller' => 'admins', 'action' => 'changePass'));
+ 	Router::connect($urlBase.'admins/saveAccount/*', array('controller' => 'admins', 'action' => 'saveAccount'));
  	
  	Router::connect($urlBase.'admins/*', array('controller' => 'admins', 'action' => 'index'));
  	
@@ -107,6 +108,7 @@
  	
  	// PluginsController
  	Router::connect($urlBase.'plugins/admin/*', array('controller' => 'plugins', 'action' => 'admin'));
+ 	Router::connect($urlBase.'plugins/theme/*', array('controller' => 'plugins', 'action' => 'theme'));
 	Router::connect($urlBase.'plugins/*', array('controller' => 'plugins', 'action' => 'index'));
 	Router::connect($urlBase.'*', array('controller' => 'plugins', 'action' => 'index'));
 

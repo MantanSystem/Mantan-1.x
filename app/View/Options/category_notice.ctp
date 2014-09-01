@@ -28,13 +28,15 @@
 		}
 		function listCatShow($cat,$sau,$webRoot,$languageMantan)
 		{
+			global $urlNotices;
+			
 			echo '<tr><td><p style="padding-left: 10px;"  >';
 			for($i=1;$i<=$sau;$i++)
 			{
 				echo '&nbsp&nbsp&nbsp&nbsp';
 			}
 			?>
-			<img src="<?php echo $webRoot;?>images/bg-list-item.png" />&nbsp&nbsp<span id="content<?php echo $cat['id'];?>"><?php echo $cat['name'];?></span>
+			<img src="<?php echo $webRoot;?>images/bg-list-item.png" />&nbsp&nbsp<a href="<?php echo $urlNotices.'cat/'.$cat['slug'].'.html';?>"><span id="content<?php echo $cat['id'];?>"><?php echo $cat['name'];?></span></a>
 			
 			</p>
 			</td>
